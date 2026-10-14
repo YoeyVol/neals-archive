@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7f5">
+  <meta name="description" content="NEALS 年度公开档案浏览器：按年份查找 1995–2026 年会议记录、公开资源与来源。">
+  <title>NEALS 年会公开档案 · 1995—2026</title>
+  <style>
+    :root {
+      --ink: #142c2b;
+      --muted: #627472;
+      --line: #dce7e3;
+      --paper: #f4f7f5;
+      --card: #fff;
+      --deep: #174743;
+      --deep-2: #22645c;
+      --mint: #d9eee6;
+      --gold: #e8b95c;
+      --coral: #c76b58;
+      --blue: #567c9e;
+      --shadow: 0 18px 48px rgba(17, 53, 49, .08);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 78% 0%, rgba(211, 233, 224, .72), transparent 33rem),
+        var(--paper);
+      font: 15px/1.58 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: inherit; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .shell { width: min(1320px, calc(100% - 52px)); margin: 0 auto; }
+    .masthead { height: 76px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(20, 44, 43, .09); }
+    .brand { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 760; letter-spacing: .02em; }
+    .brand-mark { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 11px; background: var(--deep); color: #e7f5ed; font: 700 15px/1 Georgia, serif; }
+    .mast-meta { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; }
+    .live-dot { display: inline-block; width: 7px; height: 7px; margin-right: 5px; border-radius: 99px; background: #60a585; vertical-align: 1px; }
+    .hero { display: grid; grid-template-columns: 1fr 278px; gap: 44px; align-items: center; padding: 48px 0 35px; }
+    .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--deep-2); font-size: 11px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 25px; height: 1px; background: #78a99b; }
+    h1 { max-width: 700px; margin: 13px 0 13px; font-family: Georgia, "Songti SC", "Noto Serif CJK SC", serif; font-size: clamp(36px, 4.1vw, 54px); line-height: 1.12; letter-spacing: -.045em; font-weight: 640; }
+    .hero-copy { max-width: 710px; margin: 0; color: #526562; font-size: 15px; }
+    .hero-foot { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 19px; }
+    .soft-tag { display: inline-flex; align-items: center; min-height: 27px; padding: 3px 10px; border: 1px solid #d5e2dc; border-radius: 999px; color: #44605a; background: rgba(255,255,255,.52); font-size: 11px; font-weight: 650; }
+    .photo-card { position: relative; aspect-ratio: 1 / 1.08; overflow: hidden; border: 1px solid rgba(255,255,255,.8); border-radius: 24px; background: #dbe7e2; box-shadow: var(--shadow); }
+    .photo-card img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .photo-credit { position: absolute; right: 10px; bottom: 10px; left: 10px; display: flex; justify-content: space-between; gap: 8px; align-items: center; padding: 8px 10px; border: 1px solid rgba(255,255,255,.38); border-radius: 12px; color: #fff; background: rgba(16, 43, 41, .7); backdrop-filter: blur(10px); font-size: 10px; }
+    .photo-credit a { color: #fff; text-underline-offset: 2px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0 0 31px; overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.8); box-shadow: 0 10px 28px rgba(17,53,49,.035); }
+    .stat { display: flex; align-items: center; gap: 13px; min-height: 78px; padding: 15px 22px; }
+    .stat + .stat { border-left: 1px solid var(--line); }
+    .stat-number { font: 650 25px/1 Georgia, serif; letter-spacing: -.04em; }
+    .stat-label { color: var(--muted); font-size: 11px; line-height: 1.38; }
+    .stat-label b { display: block; color: var(--ink); font-size: 12px; font-weight: 700; }
+    .workspace { display: grid; grid-template-columns: 236px minmax(0, 1fr); align-items: start; gap: 25px; padding-bottom: 58px; }
+    .year-panel, .content-panel { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,255,255,.88); box-shadow: 0 9px 28px rgba(17,53,49,.035); }
+    .year-panel { position: sticky; top: 16px; padding: 18px 13px 14px; }
+    .panel-kicker { margin: 1px 8px 13px; color: #788985; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .year-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; max-height: min(62vh, 520px); overflow-y: auto; padding-right: 2px; scrollbar-color: #c6d9d1 transparent; scrollbar-width: thin; }
+    .year-btn { min-height: 34px; border: 1px solid transparent; border-radius: 10px; color: #62736f; background: transparent; font-size: 12px; font-weight: 670; transition: .15s ease; }
+    .year-btn:hover { color: var(--deep); background: #eff6f2; }
+    .year-btn[aria-current="true"] { border-color: #bad9cc; color: #153f3b; background: #e2f1e9; box-shadow: inset 0 0 0 1px rgba(38,101,88,.04); }
+    .year-btn[hidden] { display: none; }
+    .legend { display: grid; gap: 7px; margin: 14px 8px 2px; padding-top: 13px; border-top: 1px solid #e6eeea; color: #6f7f7b; font-size: 10px; }
+    .legend span { display: inline-flex; align-items: center; gap: 7px; }
+    .legend i { width: 7px; height: 7px; border-radius: 50%; background: #68a184; }
+    .legend .planned i { background: #d19a3f; }
+    .legend .uncertain i { background: #9aa8a4; }
+    .content-panel { min-height: 535px; padding: 24px 25px 27px; }
+    .tools { display: flex; align-items: center; gap: 12px; }
+    .searchbox { position: relative; flex: 1; }
+    .search-icon { position: absolute; top: 50%; left: 15px; width: 16px; height: 16px; transform: translateY(-50%); color: #71827e; pointer-events: none; }
+    .searchbox input { width: 100%; min-height: 47px; padding: 0 16px 0 43px; outline: none; border: 1px solid #dce7e3; border-radius: 13px; color: var(--ink); background: #fbfdfc; font-size: 13px; transition: .16s; }
+    .searchbox input:focus { border-color: #7cae9d; box-shadow: 0 0 0 3px rgba(83,151,128,.12); }
+    .searchbox input::placeholder { color: #92a19d; }
+    .result-count { min-width: 95px; color: var(--muted); text-align: right; font-size: 11px; }
+    .filters { display: flex; gap: 7px; flex-wrap: wrap; margin: 13px 0 25px; }
+    .filter-btn { padding: 6px 11px; border: 1px solid #e0e9e5; border-radius: 99px; color: #647571; background: #fff; font-size: 10px; font-weight: 700; transition: .15s; }
+    .filter-btn:hover { border-color: #aac9bb; }
+    .filter-btn[aria-pressed="true"] { border-color: #c4dfd2; color: #214d44; background: #eaf5ef; }
+    .year-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; padding: 1px 0 19px; border-bottom: 1px solid #e9efec; }
+    .year-overline { color: #82918d; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    h2 { margin: 3px 0 5px; font: 640 27px/1.22 Georgia, "Songti SC", "Noto Serif CJK SC", serif; letter-spacing: -.025em; }
+    .meeting-meta { max-width: 690px; margin: 0; color: #5d6f6b; font-size: 12px; }
+    .status-badge { flex: none; display: inline-flex; align-items: center; gap: 6px; margin-top: 5px; padding: 6px 9px; border: 1px solid #d6e6dc; border-radius: 9px; color: #286044; background: #edf6ef; font-size: 10px; font-weight: 730; }
+    .status-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #60a177; }
+    .status-badge.planned { border-color: #eddfc3; color: #806226; background: #fbf5e8; }
+    .status-badge.planned::before { background: #c39239; }
+    .status-badge.uncertain { border-color: #e1e7e4; color: #687673; background: #f3f6f4; }
+    .status-badge.uncertain::before { background: #9ba9a5; }
+    .subsection { margin-top: 19px; }
+    .section-title { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; color: #29433e; font-size: 11px; font-weight: 800; letter-spacing: .035em; }
+    .section-title small { color: #8b9995; font-size: 10px; font-weight: 600; letter-spacing: 0; }
+    .resource-list { display: grid; gap: 8px; }
+    .resource { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 12px 13px; border: 1px solid #e5ece8; border-radius: 13px; background: #fff; transition: .16s ease; }
+    .resource:hover { border-color: #c7dad1; background: #fcfefd; transform: translateY(-1px); }
+    .resource-title { margin: 0; color: #263b38; font-size: 12px; font-weight: 720; line-height: 1.45; }
+    .resource-kind { margin: 3px 0 0; color: #81908c; font-size: 10px; }
+    .resource-meta { display: flex; align-items: center; gap: 7px; margin-top: 6px; }
+    .local-mark { color: #547269; font-size: 9px; }
+    .open-link { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 94px; padding: 8px 10px; border: 1px solid #deebe4; border-radius: 9px; color: #315d51; background: #f6faf7; text-decoration: none; white-space: nowrap; font-size: 10px; font-weight: 750; }
+    .open-link:hover { border-color: #a9c9ba; background: #eaf5ee; }
+    .open-link.disabled { color: #99a5a1; background: #f6f8f7; pointer-events: none; }
+    .empty-resources { padding: 15px; border: 1px dashed #d7e3de; border-radius: 12px; color: #7b8b86; background: #fbfdfc; font-size: 11px; }
+    .notes { margin-top: 18px; padding: 13px 14px; border: 1px solid #e8eee9; border-radius: 12px; color: #687875; background: #f7faf8; font-size: 10px; line-height: 1.6; }
+    .notes b { color: #465e58; }
+    .all-results { display: grid; gap: 19px; }
+    .result-group { padding: 16px; border: 1px solid #e5ece8; border-radius: 15px; background: #fcfefd; }
+    .result-group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 15px; padding-bottom: 10px; border-bottom: 1px solid #e8efeb; }
+    .result-group-head h3 { margin: 0; font: 650 20px/1.1 Georgia, serif; }
+    .result-group-head span { color: #758580; font-size: 10px; }
+    .result-group .resource-list { margin-top: 10px; }
+    .no-results { display: grid; place-items: center; min-height: 260px; text-align: center; color: #6f7f7b; }
+    .no-results b { display: block; margin-bottom: 4px; color: var(--ink); font-size: 14px; }
+    .footer { display: flex; justify-content: space-between; gap: 20px; padding: 18px 0 25px; border-top: 1px solid rgba(20,44,43,.09); color: #7e8c88; font-size: 10px; }
+    .footer a { text-underline-offset: 2px; }
+    @media (max-width: 820px) {
+      .shell { width: min(100% - 32px, 700px); }
+      .hero { grid-template-columns: 1fr 190px; gap: 22px; padding-top: 35px; }
+      .photo-card { aspect-ratio: 1 / 1.08; }
+      .workspace { grid-template-columns: 1fr; gap: 13px; }
+      .year-panel { position: static; padding: 12px; }
+      .year-list { display: flex; max-height: none; overflow-x: auto; gap: 6px; padding-bottom: 2px; }
+      .year-btn { flex: none; width: 51px; }
+      .legend { display: none; }
+      .panel-kicker { margin: 0 7px 8px; }
+    }
+    @media (max-width: 560px) {
+      .shell { width: calc(100% - 26px); }
+      .masthead { height: 62px; }
+      .mast-meta { font-size: 10px; }
+      .hero { grid-template-columns: 1fr; gap: 19px; padding: 29px 0 23px; }
+      h1 { font-size: 37px; }
+      .hero-copy { font-size: 13px; }
+      .photo-card { display: none; }
+      .stats { margin-bottom: 18px; }
+      .stat { min-height: 70px; gap: 8px; padding: 10px 9px; }
+      .stat-number { font-size: 21px; }
+      .stat-label { font-size: 9px; }
+      .stat-label b { font-size: 10px; }
+      .content-panel { min-height: 450px; padding: 15px 13px 19px; }
+      .tools { align-items: stretch; flex-direction: column; gap: 7px; }
+      .result-count { text-align: left; }
+      .filters { margin: 10px 0 19px; }
+      .year-heading { gap: 8px; }
+      h2 { font-size: 24px; }
+      .meeting-meta { font-size: 11px; }
+      .status-badge { font-size: 9px; }
+      .resource { grid-template-columns: 1fr; }
+      .open-link { justify-self: start; }
+      .footer { flex-direction: column; gap: 4px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="masthead">
+      <div class="brand"><span class="brand-mark">N</span><span>NEALS · 公开档案</span></div>
+      <div class="mast-meta"><span><i class="live-dot"></i>静态档案浏览器</span><span>1995—2026</span></div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <div class="eyebrow">Annual meeting archive</div>
+          <h1 id="page-title">NEALS 年会<br>公开档案</h1>
+          <p class="hero-copy">按年份查找年度会议记录、议程、摘要、论文集、会后报道与其他公开资料。档案记录来源与证据边界；“暂未找到证据”不等于“确认未举行”。</p>
+          <div class="hero-foot"><span class="soft-tag">年度导航</span><span class="soft-tag">跨年搜索</span><span class="soft-tag">来源直达</span><span class="soft-tag">1995—2026</span></div>
+        </div>
+        <div class="photo-card">
+          <img src="./assets/neals-2023-meeting.jpg" alt="NEALS 2023 年会公开图库中的参会者合影缩略图" width="238" height="239">
+          <div class="photo-credit"><span>2023 年会 · 官方图库缩略图</span><a href="https://meeting.neals.org/2023-gallery" target="_blank" rel="noopener noreferrer">查看图库 ↗</a></div>
+        </div>
+      </section>
+
+      <section class="stats" aria-label="档案统计">
+        <div class="stat"><div class="stat-number" id="stat-years">32</div><div class="stat-label"><b>覆盖年份</b>1995 至 2026</div></div>
+        <div class="stat"><div class="stat-number" id="stat-resources">83</div><div class="stat-label"><b>公开资源条目</b>网页、文件与图库项目</div></div>
+        <div class="stat"><div class="stat-number" id="stat-local">51</div><div class="stat-label"><b>源档案包内有本地副本</b>此浏览页跳转至原始来源</div></div>
+      </section>
+
+      <section class="workspace" aria-label="档案浏览器">
+        <aside class="year-panel">
+          <div class="panel-kicker">按年份浏览 · 32 年</div>
+          <nav class="year-list" id="year-list" aria-label="年份导航"></nav>
+          <div class="legend" aria-label="状态说明">
+            <span><i></i>已确认举办</span>
+            <span class="planned"><i></i>计划举办 / 尚未举行</span>
+            <span class="uncertain"><i></i>暂未找到证据</span>
+          </div>
+        </aside>
+
+        <section class="content-panel" aria-live="polite">
+          <div class="tools">
+            <label class="searchbox">
+              <svg class="search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <input id="search" type="search" autocomplete="off" placeholder="搜索年份、资源标题、类型或会议记录…" aria-label="搜索档案">
+            </label>
+            <div class="result-count" id="result-count" aria-live="polite"></div>
+          </div>
+          <div class="filters" role="group" aria-label="按会议状态筛选">
+            <button class="filter-btn" data-filter="all" aria-pressed="true">全部年份</button>
+            <button class="filter-btn" data-filter="confirmed" aria-pressed="false">已确认举办</button>
+            <button class="filter-btn" data-filter="planned" aria-pressed="false">计划举办</button>
+            <button class="filter-btn" data-filter="uncertain" aria-pressed="false">暂未找到证据</button>
+          </div>
+          <div id="results"></div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>档案范围与统计依据：用户提供的年度公开档案索引及逐年清单。</span>
+      <span>资料链接指向清单记载的原始公开来源；受限资源不作绕过。</span>
+    </footer>
+  </div>
+  <script>
+    const DATA_URL = "./archive-data.json";
+    const state = { records: [], selected: "2026", query: "", filter: "all" };
+    const $ = (selector) => document.querySelector(selector);
+    const yearList = $("#year-list");
+    const results = $("#results");
+    const search = $("#search");
+    const count = $("#result-count");
+    const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+    const safeUrl = (url) => { try { const u = new URL(url); return u.protocol === "https:" || u.protocol === "http:" ? u.href : ""; } catch { return ""; } };
+    const statusLabel = (r) => r.status === "confirmed" ? "已确认举办" : r.status === "planned" ? "计划举办 / 尚未举行" : "暂未找到证据";
+    const hasLocal = (item) => Boolean(item.local_available);
+
+    function setYearButtons() {
+      yearList.innerHTML = state.records.map(r => `<button class="year-btn" type="button" data-year="${escapeHtml(r.year)}" aria-current="${r.year === state.selected}">${escapeHtml(r.year)}</button>`).join("");
+      yearList.querySelectorAll(".year-btn").forEach(btn => btn.addEventListener("click", () => {
+        state.selected = btn.dataset.year;
+        render();
+      }));
+    }
+
+    function resourceCard(item) {
+      const url = safeUrl(item.url);
+      return `<article class="resource">
+        <div><p class="resource-title">${escapeHtml(item.title)}</p>
+          <p class="resource-kind">${escapeHtml(item.kind || "公开资源")}</p>
+          ${hasLocal(item) ? `<div class="resource-meta"><span class="local-mark" title="源档案包中记录了本地副本；此网站仅发布浏览页与必要素材">● 源档案包内有本地副本</span></div>` : ""}
+        </div>
+        ${url ? `<a class="open-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">打开来源 <span aria-hidden="true">↗</span></a>` : `<span class="open-link disabled">无直达链接</span>`}
+      </article>`;
+    }
+
+    function statusBadge(record) {
+      return `<span class="status-badge ${escapeHtml(record.status)}">${escapeHtml(statusLabel(record))}</span>`;
+    }
+
+    function matches(record, query) {
+      if (state.filter !== "all" && record.status !== state.filter) return false;
+      if (!query) return true;
+      const text = [record.year, record.event_status, record.edition_and_dates, ...(record.public_files || []).flatMap(x => [x.title, x.kind, x.download_status])].join(" ").toLocaleLowerCase();
+      return text.includes(query.toLocaleLowerCase());
+    }
+
+    function resourceMatches(item, query) {
+      if (!query) return true;
+      return [item.title, item.kind, item.download_status].join(" ").toLocaleLowerCase().includes(query.toLocaleLowerCase());
+    }
+
+    function renderCurrent(record) {
+      const query = state.query.trim();
+      let list = (record.public_files || []).filter(item => resourceMatches(item, query));
+      const recordMatches = [record.year, record.event_status, record.edition_and_dates].join(" ").toLocaleLowerCase().includes(query.toLocaleLowerCase());
+      if (query && !recordMatches && list.length === 0) {
+        const yearIndex = state.records.findIndex(r => r.year === record.year);
+        count.textContent = `${yearIndex + 1} / ${state.records.length} 年`;
+        results.innerHTML = `<div class="no-results"><div><b>${escapeHtml(record.year)} 年没有匹配项</b>试试其他关键词，或清除搜索查看该年全部记录。</div></div>`;
+        return;
+      }
+      count.textContent = `${record.public_files.length} 条资源`;
+      const statusClass = record.status === "confirmed" ? "已确认举办" : record.status === "planned" ? "计划举办" : "暂未找到证据";
+      const notes = record.access_limited?.length ? `<div class="notes"><b>访问限制与说明：</b>${escapeHtml(record.access_limited.slice(0, 2).join(" "))}${record.access_limited.length > 2 ? `（另有 ${record.access_limited.length - 2} 条说明，见逐年索引。）` : ""}</div>` : "";
+      results.innerHTML = `<div class="year-heading">
+          <div><div class="year-overline">Annual meeting archive · ${escapeHtml(record.year)}</div><h2>${escapeHtml(record.year)} 年</h2><p class="meeting-meta">${escapeHtml(record.edition_and_dates || record.event_status)}</p></div>
+          ${statusBadge(record)}
+        </div>
+        <section class="subsection"><div class="section-title"><span>公开资源</span><small>${record.public_files.length} 条 · ${escapeHtml(statusClass)}</small></div>
+          ${list.length ? `<div class="resource-list">${list.map(resourceCard).join("")}</div>` : `<div class="empty-resources">该年度清单中暂未列出可直接打开的公开文件。可查看下方来源链接与调查备注。</div>`}
+        </section>
+        ${notes}
+        <section class="subsection"><div class="section-title"><span>会议状态与证据说明</span><small>索引原文摘要</small></div><div class="notes">${escapeHtml(record.event_status)}</div></section>
+        <section class="subsection"><div class="section-title"><span>来源页面</span><small>${record.source_urls.length} 个</small></div><div class="resource-list">${record.source_urls.slice(0, 6).map((url, i) => `<article class="resource"><div><p class="resource-title">来源 ${String(i + 1).padStart(2, "0")}</p><p class="resource-kind">${escapeHtml(url.replace(/^https?:\/\//, ""))}</p></div><a class="open-link" href="${escapeHtml(safeUrl(url))}" target="_blank" rel="noopener noreferrer">打开来源 ↗</a></article>`).join("")}</div></section>`;
+    }
+
+    function renderSearch(records) {
+      const query = state.query.trim();
+      const grouped = records.map(record => ({ record, files: (record.public_files || []).filter(item => resourceMatches(item, query)) })).filter(x => x.files.length || [x.record.year, x.record.event_status, x.record.edition_and_dates].join(" ").toLocaleLowerCase().includes(query.toLocaleLowerCase()));
+      const total = grouped.reduce((n, g) => n + g.files.length, 0);
+      count.textContent = `${grouped.length} 年 · ${total} 条资源`;
+      if (!grouped.length) {
+        results.innerHTML = `<div class="no-results"><div><b>没有找到匹配内容</b>试试更短的关键词，或切换状态筛选。</div></div>`;
+        return;
+      }
+      results.innerHTML = `<div class="all-results">${grouped.map(({record, files}) => `<section class="result-group"><div class="result-group-head"><h3>${escapeHtml(record.year)}</h3><span>${escapeHtml(statusLabel(record))} · ${files.length} 条匹配资源</span></div><p class="meeting-meta" style="margin:9px 0 0">${escapeHtml(record.edition_and_dates || record.event_status)}</p>${files.length ? `<div class="resource-list">${files.map(resourceCard).join("")}</div>` : `<div class="notes">${escapeHtml(record.event_status)}</div>`}</section>`).join("")}</div>`;
+    }
+
+    function render() {
+      const query = state.query.trim();
+      const visible = state.records.filter(r => matches(r, query));
+      yearList.querySelectorAll(".year-btn").forEach(btn => {
+        const record = state.records.find(r => r.year === btn.dataset.year);
+        btn.hidden = !record || !matches(record, query);
+        btn.setAttribute("aria-current", String(record?.year === state.selected && !query));
+      });
+      if (query) { renderSearch(visible); return; }
+      const selected = state.records.find(r => r.year === state.selected && (state.filter === "all" || r.status === state.filter));
+      if (selected) { renderCurrent(selected); return; }
+      const fallback = visible[0];
+      if (fallback) { state.selected = fallback.year; renderCurrent(fallback); return; }
+      count.textContent = "0 个年份";
+      results.innerHTML = `<div class="no-results"><div><b>该筛选条件下没有年份</b>请切换筛选条件。</div></div>`;
+    }
+
+    document.querySelectorAll(".filter-btn").forEach(btn => btn.addEventListener("click", () => {
+      state.filter = btn.dataset.filter;
+      document.querySelectorAll(".filter-btn").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+      render();
+    }));
+    search.addEventListener("input", () => { state.query = search.value; render(); });
+
+    fetch(DATA_URL).then(response => { if (!response.ok) throw new Error("Archive data could not be loaded"); return response.json(); }).then(data => {
+      state.records = data.records;
+      $("#stat-years").textContent = data.stats.years;
+      $("#stat-resources").textContent = data.stats.resources;
+      $("#stat-local").textContent = data.stats.localCopies;
+      setYearButtons();
+      render();
+    }).catch(() => {
+      count.textContent = "加载失败";
+      results.innerHTML = `<div class="no-results"><div><b>档案索引暂时不可用</b>请刷新页面重试。</div></div>`;
+    });
+  </script>
+</body>
+</html>
